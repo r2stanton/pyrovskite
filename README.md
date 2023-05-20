@@ -11,4 +11,10 @@
 
 
 ## Note on xTB input file generation
-The first 
+xTB input files are for use with CP2K. Additionally, openbabel is required to
+convert files to a CP2K readable format. You can install both of these things
+with the command.
+
+```python
+conda install -c conda-forge cp2k openbabel
+```
