@@ -1,0 +1,85 @@
+&FORCE_EVAL
+  &DFT
+	UKS .FALSE.
+    &QS
+      METHOD xTB
+      &xTB
+        DO_EWALD  T
+        CHECK_ATOMIC_CHARGES  F
+        COULOMB_INTERACTION T
+        &PARAMETER
+          DISPERSION_PARAMETER_FILE placeholder2
+          PARAM_FILE_NAME placeholder
+        &END PARAMETER
+        USE_HALOGEN_CORRECTION .TRUE.
+      &END
+
+      &DISTRIBUTION
+        BASIC_OPTIMIZATION .FALSE.
+        BASIC_SPATIAL_OPTIMIZATION .TRUE.
+      &END
+      
+    &END QS
+    &POISSON
+      POISSON_SOLVER PERIODIC
+      PERIODIC XYZ
+    &END
+
+    &SCF
+      SCF_GUESS ATOMIC
+      EPS_SCF 1.e-8
+      &OT
+         PRECONDITIONER FULL_SINGLE_INVERSE
+         MINIMIZER DIIS
+		 ENERGY_GAP .03 ! A conservative ~.8 eV for most perovskites.
+      &END
+      MAX_SCF  500
+    &END SCF
+
+  &END DFT
+
+  STRESS_TENSOR ANALYTICAL
+
+  &SUBSYS
+    &CELL
+        CELL_FILE_FORMAT CIF
+        CELL_FILE_NAME /home/alg/installs/pyrovskite/tests/data/testvcopt_vcopt.cif
+    &END CELL
+    &TOPOLOGY
+        COORD_FILE_NAME /home/alg/installs/pyrovskite/tests/data/testvcopt_vcopt.cif
+        COORD_FILE_FORMAT CIF
+
+      &GENERATE 
+        !REORDER T 
+      &END GENERATE
+
+    &END TOPOLOGY
+  &END SUBSYS
+
+&END FORCE_EVAL
+
+&GLOBAL
+  PROJECT_NAME /home/alg/installs/pyrovskite/tests/data/testvcopt_vcopt
+  RUN_TYPE CELL_OPT
+  PRINT_LEVEL MEDIUM
+&END GLOBAL
+
+&MOTION
+  &CELL_OPT
+    MAX_ITER 500
+    KEEP_SYMMETRY .TRUE.
+	KEEP_ANGLES .TRUE.
+  &END
+  &GEO_OPT
+      OPTIMIZER CG 
+      MAX_ITER   5000
+      MAX_FORCE  9.7225D-4 
+      TYPE MINIMIZATION
+  &END
+  &PRINT
+    &FORCES ON
+    &END FORCES
+  &END PRINT
+&END
+
+                    
