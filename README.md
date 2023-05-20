@@ -6,7 +6,6 @@
 ## Requirements
 - ASE https://wiki.fysik.dtu.dk/ase/
 - pymatgen https://pymatgen.org/
-- openbabel http://openbabel.org/wiki/Main_Page
 - pytest to run ```pytest .``` in the tests directory.
 
 
