@@ -80,7 +80,9 @@ def make_bulk(A, B, X, BX_dist):
 
         add_adsorbate(
             perov, A, position=(x, y), height=z)
-        perov.wrap()
+
+        perov.pbc = [1,1,1]
+        # perov.wrap()
         return(perov)
 
     elif type(A) == str:
@@ -93,6 +95,7 @@ def make_bulk(A, B, X, BX_dist):
                                  [0.0, 0.5, 0.5]])
 
         perov.set_cell(cell, scale_atoms=True)
+        perov.pbc = [1,1,1]
         return(perov)
 
 def make_double(A, B, Bp, X, BX_dist):
@@ -271,8 +274,12 @@ def make_2drp(Ap, A, B, X, n, BX_dist, penet = PENET, exp = True,
         The 2drp perovskite structure as an ASE Atoms object.
     """
 
-    # acceptable only for cubic lattices (of the bulk phase)
-    Ap = Ap.copy()
+    if type(Ap) == str:
+        raise ValueError("Ap must be a molecule in the form of an Atoms "
+                "object, not a single atom as a string.")
+    else:
+        Ap = Ap.copy()
+
     if type(A) != str:
         A = A.copy()
     else:
@@ -390,7 +397,12 @@ def make_dj(Ap, A, B, X, n, BX_dist, penet = PENET, exp = True, Ap_Rx = None,
         The dj perovskite structure as an ASE Atoms object.
     """
 
-    Ap = Ap.copy()
+    if type(Ap) == str:
+        raise ValueError("Ap must be a molecule in the form of an Atoms "
+                "object, not a single atom as a string.")
+    else:
+        Ap = Ap.copy()
+
     if type(A) != str:
         A = A.copy()
     else:
