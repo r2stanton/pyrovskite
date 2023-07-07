@@ -1,4 +1,5 @@
 from pymatgen.io.ase import AseAtomsAdaptor
+import numpy as np
 import ase.io, os
 
 def xTB_input(calc_type = "vcopt", prefix = "xtb", cif_name = None,
@@ -313,11 +314,5 @@ def _count_electrons(cif):
     else:
         atoms = cif.copy()
 
-    structure = AseAtomsAdaptor.get_structure(atoms)
-    chemical_symbols = structure.species
-    Z = 0
-    for elem in chemical_symbols:
-        Z += elem.Z
-
-    return Z
+    return(int(np.sum(atoms.get_atomic_numbers())))
 
