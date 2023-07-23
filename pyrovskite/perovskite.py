@@ -296,7 +296,20 @@ class Perovskite:
 
     def _get_angle(self, a, b):
         """ Simple trig to get X-B-X angle"""
-        return np.arccos((np.dot(a,b)/(np.linalg.norm(a)*np.linalg.norm(b)))) * 180/np.pi
+        arg_arccos =  np.dot(a,b) / ( np.linalg.norm(a) * np.linalg.norm(b) )  
+
+
+        # Sometimes there is a precision error, which makes the |argument| slightly larger than 1.0
+        # let's see this as a temporary fix, because really some enforced precision on np ops
+        # should sort this. @FIXME
+        if arg_arccos > 1.0 and arg_arccos < 1.0005:
+            print("here")
+            arg_arccos = 1.0
+        elif arg_arccos < -1.0 and arg_arccos > -1.0005:
+            print("here")
+            arg_arccos = -1.0
+
+        return np.arccos(arg_arccos) * 180/np.pi
 
     def compute_delta(self, return_type = "delta"):
         """
