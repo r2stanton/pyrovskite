@@ -1,0 +1,16 @@
+# spacers.dat,,,
+# Molecule selection sourced from 10.1002/ente.202100948, (add other ref),,
+# Molecule geometries sourced from pubchem database https://pubchem.ncbi.nlm.nih.gov,,,
+# ALL molecules are oriented along z-axis with +ve side (where applicable) facing UP.,,,
+# Molecule name (pubchem) | Abbreviation | Charge | Filename,,,
+propylammonium,PA,1,propylammonium.xyz
+butylammonium,BA,1,butylammonium.xyz
+benzylammonium,BZA,1,benzylammonium.xyz
+ethylamminium,EA,1,ethylamminium.xyz
+pentylammonium,PYA,1,pentylammonium.xyz
+guanidinium,GA,1,guanidinium.xyz
+3AMP,3AMP,2,3AMP.xyz
+4AMP,4AMP,2,4AMP.xyz
+2-thiopheneformamidine,ThFA,1,ThFA.xyz
+2-amino-methylthiophene,ThMA,1,ThMA.xyz
+p-fluorobenzy-lammonium,pFBA,1,pFBA.xyz
