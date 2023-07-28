@@ -24,7 +24,8 @@ class Perovskite:
                   use np.inf for bulk.
     """
 
-    def __init__(self, atoms, Ap=None, A=None, B=None, Bp=None, X=None, n=None):
+    def __init__(self, atoms, Ap=None, A=None, B=None, Bp=None, X=None, n=None,
+                 suppress_output=False):
         if type(atoms) == str:
             self.atoms=ase.io.read(atoms)
         elif type(atoms) == ase.atoms.Atoms:
@@ -80,12 +81,14 @@ class Perovskite:
             pass
         if self.B == None:
             B_candidates = list(set(self.common_B) & set(self.atom_types))
-            print(f"\nNo B-cation set, candidate B-cations determined from structure:\n{B_candidates}\n")
+            if not suppress_output:
+                print(f"\nNo B-cation set, candidate B-cations determined from structure:\n{B_candidates}\n")
 
             if len(B_candidates) == 1:
                 self.B = B_candidates[0]
             elif len(B_candidates) == 2:
-                print(f"Two B-site candidates found, possible double perovskite system\nSetting B={B_candidates[0]} and Bp={B_candidates[1]}")
+                if not suppress_output:
+                    print(f"Two B-site candidates found, possible double perovskite system\nSetting B={B_candidates[0]} and Bp={B_candidates[1]}")
                 self.B = B_candidates[0]
                 self.Bp = B_candidates[1]
             else: # Figure out how to deal with weird structures later.
@@ -97,7 +100,10 @@ class Perovskite:
             # Particularly O, F.
             self.common_X = ['O', 'F', 'Cl', 'Br', 'I']
             X_candidates = list(set(self.common_X) & set(self.atom_types))
-            print(f"\nNo X-anion set, candidate X-anions determined from structure:\n{X_candidates}\n")
+
+            if not suppress_output:
+                print(f"\nNo X-anion set, candidate X-anions determined from structure:\n{X_candidates}\n")
+
             if len(X_candidates) == 1:
                 self.X = X_candidates[0]
 
@@ -138,14 +144,12 @@ class Perovskite:
                         inorg_max = X_nn[key]['inorg']
                 
 
-
-
-
                 # If local chem env. determines X-site anion.
                 # If not, we need a slightly more robut (but more time)
                 # consuming approach to determining the X-anion
                 if X_max is not None:
-                    print(f"{X_max} detected as the X-anion. [From local env.]")
+                    if not suppress_output:
+                        print(f"{X_max} detected as the X-anion. [From local env.]")
                     self.X = X_max
                 else:
                     # Approach 2:
@@ -172,8 +176,9 @@ class Perovskite:
 
                     tmp_idx = X_av_list.index(min(X_av_list))
                     self.X = X_id[tmp_idx]
-                    print("\nSimple local env method failed.")
-                    print(f"{self.X} determined as X-anion from more robust method. Check this is right.\n")
+                    if not suppress_output:
+                        print("\nSimple local env method failed.")
+                        print(f"{self.X} determined as X-anion from more robust method. Check this is right.\n")
 
                 # STOICHIOMETRY NEEDS MORE WORK... 2D Perovskites have X_3n+1, bulk have X_3n, so we
                 # Need to be able to differentiate between the two.. 
@@ -440,7 +445,6 @@ class Perovskite:
 
             res = np.zeros_like(Xs[0])  # For computation of tilde{P} from tilde_P_list
             e_basis = np.zeros((3,3))   # For the 'basis' of the octahedra
-            print(e_basis)
             for e_idx, pair in enumerate(self.trans_pairs[idx]):
                 
                 # Here we store the basis vectors for the octahedra.
