@@ -11,21 +11,30 @@ import numpy as np
 class Perovskite:
     """
     Constructor arguments:
+    Required:
         atoms (str or ase.atoms.Atoms): Filename or Atoms object of the 
                                         perovskite system.
+    Optional:
         Ap (str): Name of spacer cation in 2D perovskite systems.
-        A  (str): A-site cation (see list of A-site cations code will look for
-                  automatically).
+        A  (str): A-site cation.
         B  (str): B-site cation (see list of B-site cations code will look for
                   automatically).
         Bp (str): B'-site cation in the case of Double perovskite systems.
         X  (str): X-site anion (code will expect Halogen or Oxygen).
         n  (int): Layer number in the case of 2D perovskite systems, optionally
                   use np.inf for bulk.
+        custom_B_cations (list): List of B-site cations (as strings) to look
+                  for in the structure. If not provided, code will look for
+                  Pb, Sn, Ge, Bi, In, Tl, Zn, Cu, Mn, Sb, Cd, Fe, Ag, Au.
+        custom_X_anions (list): List of X-site anions (as strings) to look
+                  for in the structure. If not provided, code will look for
+                  O, F, Cl, Br, I.
     """
 
     def __init__(self, atoms, Ap=None, A=None, B=None, Bp=None, X=None, n=None,
+                 custom_B_cations=None, custom_X_anions=None,
                  suppress_output=False):
+
         if type(atoms) == str:
             self.atoms=ase.io.read(atoms)
         elif type(atoms) == ase.atoms.Atoms:
@@ -65,8 +74,16 @@ class Perovskite:
         # These are used to help determine B-, X-site ions insofar as they're not provided.
         # This can also be passed as an argument if one is using perovskites containing more 
         # exotic materials, e.g. organic X-site anions, or TM B-site cations, etc.
-        self.common_B = ['Pb', 'Sn', 'Ge', 'Bi', 'In', 'Tl', 'Zn', 'Cu', 'Mn', 'Sb', 'Cd', 'Fe', 'Ag', 'Au']
-        self.common_X = ['O', 'F', 'Cl', 'Br', 'I']
+        if custom_B_cations is not None:
+            self.common_B = custom_B_cations
+        else:
+            self.common_B = ['Pb', 'Sn', 'Ge', 'Bi', 'In', 'Tl', 'Zn', 'Cu', 'Mn',
+                             'Sb', 'Cd', 'Fe', 'Ag', 'Au']
+
+        if custom_X_anions is not None: 
+            self.common_X = custom_X_anions
+        else:
+            self.common_X = ['O', 'F', 'Cl', 'Br', 'I']
 
         unique_types = []
         for atom in self.atoms.get_chemical_symbols():
@@ -689,7 +706,6 @@ class Perovskite:
         This function is a thin wrapper around pyrovskite.input_generator's
         xTB_input function. See help(pyrovskite.input_generator.xTB_input)
         for the full documentation.
-
         """
 
         if atoms is None:
@@ -705,7 +721,6 @@ class Perovskite:
         This function is a thin wrapper around pyrovskite.input_generator's
         GPAW_input function. See help(pyrovskite.input_generator.GPAW_input)
         for the full documentation.
-
         """
 
         if atoms is None:
