@@ -325,10 +325,8 @@ class Perovskite:
         # let's see this as a temporary fix, because really some enforced precision on np ops
         # should sort this. @FIXME
         if arg_arccos > 1.0 and arg_arccos < 1.0005:
-            print("here")
             arg_arccos = 1.0
         elif arg_arccos < -1.0 and arg_arccos > -1.0005:
-            print("here")
             arg_arccos = -1.0
 
         return np.arccos(arg_arccos) * 180/np.pi
