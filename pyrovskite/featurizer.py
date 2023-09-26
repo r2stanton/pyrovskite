@@ -1,4 +1,8 @@
+from evgraf import find_inversion_symmetry
 import numpy as np
+
+
+
 
 class Featurizer():
     """
@@ -92,12 +96,34 @@ class Featurizer():
             self.df['org_inorg_weight_ratio'] = self.df[self.ase_col].apply(get_mass_ratio)
 
             return self.df
+
+    def measure_inversion_symmetry(self, perovskite = None, progress_apply = True):
+        try:
+            import tqdm
+        except:
+            progress_apply = False
+            print("TQDM not installed. Progress bars will not be shown.")
+
+        self._input_consistency_check(perovskite)
+
+        def rmsd_from_inversion_symmetry(ats):
+            rmsd = find_inversion_symmetry(ats).rmsd
+            if rmsd < 1e-5:
+                return 0
+            else:
+                return rmsd
+        if progress_apply:
+            self.df['rmsd_from_inversion'] = self.df[self.ase_col].progress_apply(rmsd_from_inversion_symmetry)
+        else:
+            self.df['rmsd_from_inversion'] = self.df[self.ase_col].apply(rmsd_from_inversion_symmetry)
+
     
     def _input_consistency_check(self, perovskite):
         if self.mode == 'single' and perovskite is None:
             raise ValueError("Must pass a perovskite to each method when in 'single' mode.")
         elif self.mode == 'df' and (self.df is None or self.ase_col is None):
             raise ValueError("Must pass a dataframe and ase_col when in 'df' mode.")
+
 
 
 

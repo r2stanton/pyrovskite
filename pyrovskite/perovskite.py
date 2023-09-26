@@ -547,6 +547,7 @@ class Perovskite:
             else:
                 print("Invalid return type, select lambda, octahedra_lambda, or both.")
         else:
+            # This is the default!!
             if return_type == "lambda":
                 return(self.Lambda_3, self.Lambda_2)
             elif return_type == "octahedra_lambda":
