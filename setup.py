@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-VERSION = '0.0.1'
+VERSION = '1.0.0'
 DESCRIPTION = 'Python package for 2D- and 3D-perovskites'
 LONG_DESCRIPTION = 'A software package for the high throughput construction, analysis, and featurization of two- and three-dimensional perovskite systems.'
 
