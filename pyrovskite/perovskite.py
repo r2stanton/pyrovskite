@@ -77,8 +77,9 @@ class Perovskite:
         if custom_B_cations is not None:
             self.common_B = custom_B_cations
         else:
-            self.common_B = ['Pb', 'Sn', 'Ge', 'Bi', 'In', 'Tl', 'Zn', 'Cu', 'Mn',
-                             'Sb', 'Cd', 'Fe', 'Ag', 'Au']
+            self.common_B = ['Pb', 'Sn', 'Ge', 'Bi', 'In', 'Tl', 'Zn', 'Cu',
+                             'Mn', 'Sb', 'Cd', 'Fe', 'Ag', 'Au', 'Pd', 'Cd',
+                             'Hg', 'Co', 'Mg']
 
         if custom_X_anions is not None: 
             self.common_X = custom_X_anions
@@ -109,8 +110,7 @@ class Perovskite:
                 self.B = B_candidates[0]
                 self.Bp = B_candidates[1]
             else: # Figure out how to deal with weird structures later.
-                ...
-                sys.exit(1)
+                raise ValueError("B-site cation not detected, provide manually.")
 
         if self.X == None:
             # The X anions are more problematic because they can pop up in spacing cations.
@@ -128,7 +128,7 @@ class Perovskite:
             # The logic here is this: 
             # For spacers containing, e.g. F, O, their nearest neighbors should be C, N, O, H.
             # For F, O that are true X-site cations, their nearest neighbors should be B-site cations.
-            else:
+            elif len(X_candidates) > 1:
                 X_candidates = list(set(self.common_X) & set(self.atom_types))
                 org_candidates = ['C', 'H', 'N', 'O']
 
@@ -206,6 +206,8 @@ class Perovskite:
                 #     X_cts[Xc_idx] = sum([0 if x.symbol != Xc else 1 for x in self.atoms])
                 # stoich_X = X_candidates[np.argmin(X_cts % 3)]
                 # print(f"{stoich_X} detected as the X-anion. [From stoichiometry, local env. failed]")
+            elif len(X_candidates) == 0:
+                raise ValueError("X-site anion not detected, provide manually.")
                     
 
     def identify_octahedra(self, return_distances = False):
