@@ -3,6 +3,9 @@
 2) Build and analyze bulk perovskites, double perovskites, 2D perovskites, and 2D double perovskites.
 3) Generate elctronic structure input files for xTB/GPAW.
 
+## |/\\|**Featurizer Branch Information**|/\\|
+- This branch should be considered as highly experimental. Dependencies may be added/removed as needed, and as such are not added to the dependencies in setup.py.
+
 ## Requirements
 - ASE https://wiki.fysik.dtu.dk/ase/
 - pymatgen https://pymatgen.org/
