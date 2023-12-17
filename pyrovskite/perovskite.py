@@ -648,7 +648,7 @@ class Perovskite:
             plt.show()
 
     def plot_rdf(self, max_dist = 10, ss_norm = False, mode = 'pyrovskite',
-                 fignum = 22, show = True):
+                 fignum = 22, show = True, element_pairs = None):
         """
         Input:
             max_dist (float/int): Max distance in angstrom for the RDF 
@@ -672,12 +672,21 @@ class Perovskite:
                              [self.B, self.B],
                              [self.X, self.X]]
         else:
-            element_pairs = [[self.B, self.X],
-                             [self.B, self.B],
-                             [self.X, self.X],
-                             [self.Bp, self.X],
-                             [self.Bp, self.Bp],
-                             [self,Bp, self.B]]
+            if element_pairs is not None:
+                if element_pairs == ["B,X", "Bp,X"]:
+
+                    element_pairs = [
+                        [self.B, self.X],
+                        [self.Bp, self.X]
+                                     ]
+
+                else:
+                    element_pairs = [[self.B, self.X],
+                                     [self.B, self.B],
+                                     [self.X, self.X],
+                                     [self.Bp, self.X],
+                                     [self.Bp, self.Bp],
+                                     [self.Bp, self.B]]
 
         plottable_rdfs = _get_plottable_partial_rdf(self, element_pairs,
                                                     max_dist = max_dist,
