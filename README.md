@@ -1,7 +1,7 @@
 # Pyrovskite
 1) Extract structural features of 2D, 3D, and 2D/3D double perovskite systems.
 2) Build and analyze bulk perovskites, double perovskites, 2D perovskites, and 2D double perovskites.
-3) Generate elcetronic structure input files for xTB/GPAW.
+3) Generate electronic structure input files for xTB/GPAW.
 
 #### 🟩 If you use this code for your research, please cite: https://doi.org/10.1063/5.0159407 🟩
 
