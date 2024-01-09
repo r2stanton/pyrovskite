@@ -78,7 +78,7 @@ class Perovskite:
             self.common_B = custom_B_cations
         else:
             self.common_B = ['Pb', 'Sn', 'Ge', 'Bi', 'In', 'Tl', 'Zn', 'Cu', 'Mn',
-                             'Sb', 'Cd', 'Fe', 'Ag', 'Au']
+                             'Sb', 'Cd', 'Fe', 'Ag', 'Au', 'Pd', 'Mg', 'Co', 'Hg']
 
         if custom_X_anions is not None: 
             self.common_X = custom_X_anions
