@@ -543,7 +543,7 @@ class Perovskite:
             elif return_type == "octahedra_lambda":
                 return(self.octahedra_Lambda_3, self.octahedra_Lambda_2, self.octahedra_Lambda)
             elif return_type == "both":
-                print("compute_lambda return both signature is:\n octa_L3, octa_L2, octa_L, L3, L2, L")
+                # print("compute_lambda return both signature is:\n octa_L3, octa_L2, octa_L, L3, L2, L")
                 return(self.octahedra_Lambda_3, self.octahedra_Lambda_2, self.octahedra_Lambda,
                        self.Lambda_3, self.Lambda_2, self.Lambda)
             else:
@@ -554,7 +554,7 @@ class Perovskite:
             elif return_type == "octahedra_lambda":
                 return(self.octahedra_Lambda_3, self.octahedra_Lambda_2)
             elif return_type == "both":
-                print("compute_lambda return both signature is:\n octa_L3, octa_L2, octa_L, L3, L2, L")
+                # print("compute_lambda return both signature is:\n octa_L3, octa_L2, octa_L, L3, L2")
                 return(self.octahedra_Lambda_3, self.octahedra_Lambda_2,
                        self.Lambda_3, self.Lambda_2)
             else:
