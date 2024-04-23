@@ -1,13 +1,19 @@
 
 def get_ionic_radius(site, name):
-    val = ionic_radii.get(site[name], None)
-    print(val)
-    return ionic_radii
+    site_dict = ionic_radii.get(site)
+    val = site_dict.get(name, None)
+
+    if val is not None:
+        return val
+    else:
+        print_available_ionic_radii()
+        print("\nIon not available, available ions printed above")
+        return None
 
 
 def print_available_ionic_radii(mode = "all"):
     """
-    Returns all available ionic radii.
+    Prints all available ionic radii.
     """
 
     print("===================================NOTE==========================================")
