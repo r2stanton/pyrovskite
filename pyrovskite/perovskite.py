@@ -1,6 +1,7 @@
 from pymatgen.io.ase import AseAtomsAdaptor as ase2pmg
 from pyrovskite.geometry import bxb_angles, _gaussian_kernel_discrete_spectrum, _get_plottable_partial_rdf
 from pyrovskite.io import xTB_input, GPAW_input
+from pyrovskite.data import get_ionic_radius
 from pymatgen.core.structure import Structure
 import matplotlib, itertools, sys
 import matplotlib.pyplot as plt
@@ -332,6 +333,35 @@ class Perovskite:
             arg_arccos = -1.0
 
         return np.arccos(arg_arccos) * 180/np.pi
+
+    def compute_goldschmidt_tolerance(self, R_A = None):
+
+        if self.Bp is not None:
+            raise ValueError("Double perovskite tolerance factors not implemented, ensure Bp is None.")
+
+        if self.A is None and R_A is None:
+            raise ValueError("A-cation is not set, or the A-cation ionic radius is not provided")
+
+        if R_A is None:
+            R_A = get_ionic_radius("A", self.A)
+        R_B = get_ionic_radius("B", self.B)
+        R_X = get_ionic_radius("X", self.X)
+
+        self.t_g = (R_A + R_X)/(np.sqrt(2)*(R_B + R_X))
+
+        return self.t_g
+
+    def compute_octahedral_tolerance(self):
+
+        if self.Bp is not None:
+            raise ValueError("Double perovskite tolerance factors not implemented, ensure Bp is None.")
+
+        R_B = get_ionic_radius("B", self.B)
+        R_X = get_ionic_radius("X", self.X)
+
+        self.mu = (R_B/R_X)
+        return self.mu
+
 
     def compute_delta(self, return_type = "delta"):
         """

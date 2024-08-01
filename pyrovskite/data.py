@@ -8,7 +8,7 @@ def get_ionic_radius(site, name):
     else:
         print_available_ionic_radii()
         print("\nIon not available, available ions printed above")
-        return None
+        raise ValueError("Ion requested does not have info in the code. See the above message")
 
 
 def print_available_ionic_radii(mode = "all"):
@@ -47,6 +47,11 @@ def print_available_ionic_radii(mode = "all"):
 
 ionic_radii = {
     "A":{
+
+        # This is completely arbitrary choice of Cs for the perovskites
+        # that don't contain an A-site cation (e.g. n = 1 2DPKs).
+        "NA"   : 1.88, # See Note above
+
         "NH4"  : 1.46, # [1]
         "MA"   : 2.17, # [1]
         "FA"   : 2.53, # [1]
@@ -83,6 +88,7 @@ ionic_radii = {
         "Co"   : 0.79, # [3] 
         "Hg"   : 1.16, # [3]
         "Zn"   : 0.88, # [3]
+        "Cd"   : 1.09, # [3]
     },
     "X":{
         "F"    : 1.29, # [1]
