@@ -5,6 +5,10 @@
 
 #### 🟩 If you use this code for your research, please cite: https://doi.org/10.1063/5.0159407 🟩
 
+--------
+
+**Goldschmidt and octahedral factors have been added for most systems, please see `pyrovskite/data.py` and `pyrovskite/perovskite.py:337-363` if you need these experimental features before docs + examples are uploaded.**
+
 ## Requirements
 - ASE https://wiki.fysik.dtu.dk/ase/
 - pymatgen https://pymatgen.org/
